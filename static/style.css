@@ -1,0 +1,157 @@
+/* General Layout */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f7faff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #2563eb;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Footer */
+footer {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* Tables */
+.table {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: white;
+}
+
+.table th {
+    background-color: #e9f2ff;
+    color: #333;
+    font-weight: 600;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e0f0ff;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.75rem;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+.btn-warning {
+    background-color: #facc15;
+    border-color: #facc15;
+    color: #000;
+}
+
+.btn-warning:hover {
+    background-color: #eab308;
+    border-color: #eab308;
+    color: #000;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    border-color: #ef4444;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+/* Tabs */
+.nav-tabs .nav-link {
+    color: #333;
+    border-radius: 0.5rem 0.5rem 0 0;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+    background: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+/* Tab Content Styling */
+.tab-content {
+    background: #ffffff;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 0.75rem 0.75rem;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 0.75rem;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* Form Fields */
+.form-control {
+    border-radius: 0.5rem;
+    border: 1px solid #cbd5e1;
+    transition: border 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+/* Search Box */
+#searchStudent {
+    max-width: 300px;
+}
+
+/* Smooth Animations */
+.fade {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.table td, .table th {
+    transition: background-color 0.3s ease;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .nav-tabs {
+        flex-direction: column;
+    }
+
+    .tab-content {
+        border-radius: 0.5rem;
+    }
+
+    #searchStudent {
+        width: 100% !important;
+        margin-bottom: 1rem;
+    }
+}

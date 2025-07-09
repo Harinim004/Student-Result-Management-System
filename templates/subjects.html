@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="text-primary">Subjects</h2>
+  <a href="/add_subject" class="btn btn-success">➕ Add Subject</a>
+</div>
+
+<table class="table table-hover shadow-sm">
+  <thead class="table-primary">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for subject in subjects %}
+    <tr>
+      <td>{{ subject.id }}</td>
+      <td>{{ subject.name }}</td>
+      <td>
+        <a href="/edit_subject/{{ subject.id }}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="/delete_subject/{{ subject.id }}" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
+    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#students">Students</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#subjects">Subjects</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#marks">Marks</button></li>
+  </ul>
+
+  <div class="tab-content">
+    <!-- Students -->
+    <div class="tab-pane fade show active" id="students">
+      <div class="d-flex justify-content-between mb-3">
+        <input id="searchStudent" class="form-control w-50" placeholder="🔍 Search students...">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentModal" onclick="openAdd('student')">➕ Add Student</button>
+      </div>
+      <table class="table shadow-sm" id="studentsTable">
+        <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for student in students %}
+            <tr>
+              <td>{{ student.id }}</td>
+              <td>{{ student.name }}</td>
+              <td>{{ student.email }}</td>
+              <td>{{ student.phone }}</td>
+              <td class="text-nowrap">
+                <button class="btn btn-sm btn-warning" onclick="openEdit('student', {{ student|tojson }})">✏️</button>
+                <form method="POST" action="/delete_student" style="display:inline-block">
+                  <input type="hidden" name="id" value="{{ student.id }}">
+                  <button class="btn btn-sm btn-danger">🗑</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Subjects -->
+    <div class="tab-pane fade" id="subjects">
+      <div class="d-flex justify-content-between mb-3">
+        <input id="searchSubject" class="form-control w-50" placeholder="🔍 Search subjects...">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subjectModal" onclick="openAdd('subject')">➕ Add Subject</button>
+      </div>
+      <table class="table shadow-sm" id="subjectsTable">
+        <thead><tr><th>ID</th><th>Name</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for subject in subjects %}
+            <tr>
+              <td>{{ subject.id }}</td>
+              <td>{{ subject.name }}</td>
+              <td class="text-nowrap">
+                <button class="btn btn-sm btn-warning" onclick="openEdit('subject', {{ subject|tojson }})">✏️</button>
+                <form method="POST" action="/delete_subject" style="display:inline-block">
+                  <input type="hidden" name="id" value="{{ subject.id }}">
+                  <button class="btn btn-sm btn-danger">🗑</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Marks -->
+    <div class="tab-pane fade" id="marks">
+      <div class="d-flex justify-content-between mb-3">
+        <div></div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#markModal" onclick="openAdd('mark')">➕ Add Mark</button>
+      </div>
+      <table class="table shadow-sm">
+        <thead><tr><th>ID</th><th>Student</th><th>Subject</th><th>Score</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for mark in marks %}
+            <tr>
+              <td>{{ mark.id }}</td>
+              <td>{{ mark.student_name }}</td>
+              <td>{{ mark.subject_name }}</td>
+              <td>{{ mark.score }}</td>
+              <td class="text-nowrap">
+                <button class="btn btn-sm btn-warning" onclick="openEdit('mark', {{ mark|tojson }})">✏️</button>
+                <form method="POST" action="/delete_mark" style="display:inline-block">
+                  <input type="hidden" name="id" value="{{ mark.id }}">
+                  <button class="btn btn-sm btn-danger">🗑</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+function openAdd(type) {
+  if (type === 'student') {
+    document.getElementById('studentId').value = '';
+    document.getElementById('studentName').value = '';
+    document.getElementById('studentEmail').value = '';
+    document.getElementById('studentPhone').value = '';
+  } else if (type === 'subject') {
+    document.getElementById('subjectId').value = '';
+    document.getElementById('subjectName').value = '';
+  } else if (type === 'mark') {
+    document.getElementById('markId').value = '';
+    document.getElementById('markStudent').selectedIndex = 0;
+    document.getElementById('markSubject').selectedIndex = 0;
+    document.getElementById('markScore').value = '';
+  }
+}
+
+function openEdit(type, data) {
+  if (type === 'student') {
+    document.getElementById('studentId').value = data.id;
+    document.getElementById('studentName').value = data.name;
+    document.getElementById('studentEmail').value = data.email;
+    document.getElementById('studentPhone').value = data.phone;
+    new bootstrap.Modal(document.getElementById('studentModal')).show();
+  } else if (type === 'subject') {
+    document.getElementById('subjectId').value = data.id;
+    document.getElementById('subjectName').value = data.name;
+    new bootstrap.Modal(document.getElementById('subjectModal')).show();
+  } else if (type === 'mark') {
+    document.getElementById('markId').value = data.id;
+    document.getElementById('markStudent').value = data.student_id;
+    document.getElementById('markSubject').value = data.subject_id;
+    document.getElementById('markScore').value = data.score;
+    new bootstrap.Modal(document.getElementById('markModal')).show();
+  }
+}
+
+document.getElementById("searchStudent").addEventListener("keyup", function() {
+  const filter = this.value.toLowerCase();
+  document.querySelectorAll("#studentsTable tbody tr").forEach(row => {
+    row.style.display = row.innerText.toLowerCase().includes(filter) ? '' : 'none';
+  });
+});
+
+document.getElementById("searchSubject").addEventListener("keyup", function() {
+  const filter = this.value.toLowerCase();
+  document.querySelectorAll("#subjectsTable tbody tr").forEach(row => {
+    row.style.display = row.innerText.toLowerCase().includes(filter) ? '' : 'none';
+  });
+});
+</script>
+{% endblock %}

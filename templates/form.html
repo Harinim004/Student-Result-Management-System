@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-primary mb-4">{{ title }}</h2>
+
+<form method="post" class="card p-4 shadow-sm">
+  {% for field in fields %}
+    {% if field == 'student_id' %}
+      <div class="mb-3">
+        <label class="form-label">Student</label>
+        <select name="student_id" class="form-select" required>
+          {% for student in students %}
+            <option value="{{ student.id }}" {% if data and data.student_id == student.id %}selected{% endif %}>{{ student.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% elif field == 'subject_id' %}
+      <div class="mb-3">
+        <label class="form-label">Subject</label>
+        <select name="subject_id" class="form-select" required>
+          {% for subject in subjects %}
+            <option value="{{ subject.id }}" {% if data and data.subject_id == subject.id %}selected{% endif %}>{{ subject.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% else %}
+      <div class="mb-3">
+        <label class="form-label text-capitalize">{{ field }}</label>
+        <input type="text" name="{{ field }}" class="form-control" value="{{ data[field] if data and field in data else '' }}" required />
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <button type="submit" class="btn btn-primary mt-2">💾 Save</button>
+  <a href="javascript:history.back()" class="btn btn-secondary mt-2">🔙 Cancel</a>
+</form>
+{% endblock %}
